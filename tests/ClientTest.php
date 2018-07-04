@@ -2,6 +2,7 @@
 
 namespace NewsApi\Tests;
 
+use NewsApi\Client;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,5 +15,11 @@ class ClientTest extends TestCase
     {
         $apiKey = getenv('NEWS_API_KEY');
         $this->assertNotEmpty($apiKey);
+    }
+
+    public function testClientTopHeadlines()
+    {
+        $client = new Client();
+        $client->topHeadlines(null);
     }
 }
