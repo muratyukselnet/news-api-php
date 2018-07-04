@@ -1,0 +1,40 @@
+{
+  "name": "murat-yuksel/news-api-php",
+  "type": "library",
+  "description": "PHP Client for Google News API",
+  "keywords": [
+    "client",
+    "google",
+    "news",
+    "api"
+  ],
+  "homepage": "https://muratyuksel.net",
+  "support": {
+    "issues": "https://github.com/murat-yuksel/news-api-php/issues",
+    "source": "https://github.com/murat-yuksel/news-api-php"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Murat Yüksel",
+      "email": "murat@muratyuksel.net",
+      "homepage": "https://muratyuksel.net"
+    }
+  ],
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "~4.0|~5.0",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "NewsApi\\": "src/NewsApi/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/",
+      "NewsApiExample\\": "example/"
+    }
+  }
+}
