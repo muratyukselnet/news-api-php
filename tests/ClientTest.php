@@ -10,5 +10,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ClientTest extends TestCase
 {
-
+    public function testSetApiKey()
+    {
+        $apiKey = getenv('NEWS_API_KEY');
+        $this->assertNotEmpty($apiKey);
+    }
 }
