@@ -2,12 +2,7 @@
   "name": "murat-yuksel/news-api-php",
   "type": "library",
   "description": "PHP Client for Google News API",
-  "keywords": [
-    "client",
-    "google",
-    "news",
-    "api"
-  ],
+  "keywords": ["client", "google", "news", "api"],
   "homepage": "https://muratyuksel.net",
   "support": {
     "issues": "https://github.com/murat-yuksel/news-api-php/issues",

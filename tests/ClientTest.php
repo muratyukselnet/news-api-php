@@ -4,6 +4,8 @@ namespace NewsApi\Tests;
 
 use NewsApi\Client;
 use NewsApi\Request\TopHeadlinesRequest;
+use NewsApi\Response\Error\Error;
+use NewsApi\Response\Error\ErrorCodes;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,6 +32,47 @@ class ClientTest extends TestCase
     public function testClientTopHeadlines()
     {
         $client = new Client();
-        $client->topHeadlines($this->topHeadlinesRequest);
+        $response = $client->topHeadlines($this->topHeadlinesRequest);
+        $this->assertObjectHasAttribute('status', $response);
+    }
+
+    public function testClientNoApiKey()
+    {
+        $client = new Client();
+        $this->topHeadlinesRequest->q = 'test';
+        $response = $client->topHeadlines($this->topHeadlinesRequest);
+        $this->assertInstanceOf('NewsApi\Response\Error\Error', $response);
+    }
+
+    public function testClientInvalidApiKey()
+    {
+        $client = new Client();
+        $this->topHeadlinesRequest->apiKey = 'test';
+        $this->topHeadlinesRequest->q = 'test';
+        $response = $client->topHeadlines($this->topHeadlinesRequest);
+        /**
+         * @var Error $response
+         */
+        $this->assertEquals(ErrorCodes::API_KEY_INVALID, $response->code);
+    }
+
+    public function testClientTopHeadlinesNoQuery()
+    {
+        $client = new Client();
+        $this->topHeadlinesRequest->apiKey = getenv('NEWS_API_KEY');
+        $response = $client->topHeadlines($this->topHeadlinesRequest);
+        /**
+         * @var Error $response
+         */
+        $this->assertEquals(ErrorCodes::PARAMETERS_MISSING, $response->code);
+    }
+
+    public function testClientValidRequest()
+    {
+        $client = new Client();
+        $this->topHeadlinesRequest->apiKey = getenv('NEWS_API_KEY');
+        $this->topHeadlinesRequest->q = 'test';
+        $response = $client->topHeadlines($this->topHeadlinesRequest);
+        $this->assertInstanceOf('NewsApi\Response\TopHeadlinesResponse', $response);
     }
 }
