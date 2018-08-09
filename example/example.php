@@ -2,17 +2,12 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$requestParser = new \NewsApi\RequestParser();
-$responseParser = new \NewsApi\ResponseParser();
-
 $request = new \NewsApi\Request\TopHeadlinesRequest();
-$request->apiKey = 'b6484720730b4ddb8957ee605840ccf1';
+$request->apiKey = getenv('NEWS_API_KEY');
 $request->q = 'Turkish';
 $request->category = 'business';
 
-$query = $requestParser->prepareTopHeadlineQueryString($request);
-
-$client = new \NewsApi\Client($requestParser, $responseParser);
+$client = new \NewsApi\Client(new \NewsApi\RequestParser(), new \NewsApi\ResponseParser());
 $response = $client->topHeadlines($request);
 
 var_dump($response);
