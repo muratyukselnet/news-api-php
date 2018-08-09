@@ -4,7 +4,6 @@ namespace NewsApi\Tests;
 
 use NewsApi\Client;
 use NewsApi\Request\EverythingRequest;
-use NewsApi\Request\TopHeadlinesRequest;
 use NewsApi\RequestParser;
 use NewsApi\Response\Error\Error;
 use NewsApi\Response\Error\ErrorCodes;
@@ -83,5 +82,6 @@ class EverythingSearchTest extends TestCase
         $this->everythingRequest->sortBy = 'popularity';
         $response = $client->everything($this->everythingRequest);
         $this->assertInstanceOf('NewsApi\Response\EverythingResponse', $response);
+        $this->assertEquals('ok', $response->status);
     }
 }
