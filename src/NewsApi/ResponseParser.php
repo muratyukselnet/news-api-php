@@ -38,7 +38,7 @@ class ResponseParser implements ResponseParserInterface
         foreach ($response->articles as $responseArticle) {
             $article = new Article();
             $article->title = $responseArticle->title ?: '';
-            $article->url = $responseArticle->url;
+            $article->url = $responseArticle->url ?: '';
             $article->author = $responseArticle->author ?: '';
             $article->description = $responseArticle->description ?: '';
             $article->urlToImage = $responseArticle->urlToImage ?: '';
