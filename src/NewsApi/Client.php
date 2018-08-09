@@ -2,6 +2,7 @@
 
 namespace NewsApi;
 
+use NewsApi\Request\EverythingRequest;
 use NewsApi\Request\TopHeadlinesRequest;
 use NewsApi\Response\ResponseInterface;
 
@@ -46,7 +47,22 @@ class Client implements ClientInterface
     {
         return $this->responseParser->parseTopHeadlinesResponse(
             $this->sendRequest(
-                $this->requestParser->prepareTopHeadlineQueryString($request),
+                $this->requestParser->prepareQueryString($request),
+                self::TOP_HEADLINES_ENDPOINT
+            )
+        );
+    }
+
+    /**
+     * Get top headlines
+     * @param EverythingRequest $request
+     * @return ResponseInterface
+     */
+    public function everything(EverythingRequest $request): ResponseInterface
+    {
+        return $this->responseParser->parseEverythingResponse(
+            $this->sendRequest(
+                $this->requestParser->prepareQueryString($request),
                 self::TOP_HEADLINES_ENDPOINT
             )
         );

@@ -2,7 +2,7 @@
 
 namespace NewsApi;
 
-use NewsApi\Request\TopHeadlinesRequest;
+use NewsApi\Request\SearchRequest;
 
 /**
  * Class RequestParser
@@ -11,19 +11,26 @@ use NewsApi\Request\TopHeadlinesRequest;
 class RequestParser implements RequestParserInterface
 {
     /**
-     * @param TopHeadlinesRequest $request
+     * @param SearchRequest $request
      * @return string
      */
-    public function prepareTopHeadlineQueryString(TopHeadlinesRequest $request): string
+    public function prepareQueryString(SearchRequest $request): string
     {
-        $request = (array) $request;
+        return http_build_query($this->filterRequestParams((array) $request));
+    }
 
+    /**
+     * @param array $request
+     * @return array
+     */
+    protected function filterRequestParams(array $request): array
+    {
         foreach ($request as $key => $item) {
             if ($item === null) {
                 unset($request[$key]);
             }
         }
 
-        return http_build_query($request);
+        return $request;
     }
 }

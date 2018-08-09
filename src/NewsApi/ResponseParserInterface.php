@@ -10,9 +10,16 @@ use NewsApi\Response\ResponseInterface;
  */
 interface ResponseParserInterface
 {
+
     /**
      * @param $response
      * @return ResponseInterface
      */
     public function parseTopHeadlinesResponse($response): ResponseInterface;
+
+    /**
+     * @param $response
+     * @return ResponseInterface
+     */
+    public function parseEverythingResponse($response): ResponseInterface;
 }

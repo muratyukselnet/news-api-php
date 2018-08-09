@@ -2,7 +2,7 @@
 
 namespace NewsApi;
 
-use NewsApi\Request\TopHeadlinesRequest;
+use NewsApi\Request\SearchRequest;
 
 /**
  * Interface RequestParserInterface
@@ -11,8 +11,8 @@ use NewsApi\Request\TopHeadlinesRequest;
 interface RequestParserInterface
 {
     /**
-     * @param TopHeadlinesRequest $request
+     * @param SearchRequest $request
      * @return string
      */
-    public function prepareTopHeadlineQueryString(TopHeadlinesRequest $request): string;
+    public function prepareQueryString(SearchRequest $request): string;
 }
