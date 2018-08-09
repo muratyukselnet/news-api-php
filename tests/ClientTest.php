@@ -4,8 +4,10 @@ namespace NewsApi\Tests;
 
 use NewsApi\Client;
 use NewsApi\Request\TopHeadlinesRequest;
+use NewsApi\RequestParser;
 use NewsApi\Response\Error\Error;
 use NewsApi\Response\Error\ErrorCodes;
+use NewsApi\ResponseParser;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,6 +23,8 @@ class ClientTest extends TestCase
         parent::__construct($name, $data, $dataName);
 
         $this->topHeadlinesRequest = new TopHeadlinesRequest();
+        $this->topHeadlinesRequest->q = 'test';
+        $this->topHeadlinesRequest->apiKey = getenv('NEWS_API_KEY');
     }
 
     public function testSetApiKey()
@@ -31,22 +35,22 @@ class ClientTest extends TestCase
 
     public function testClientTopHeadlines()
     {
-        $client = new Client();
+        $client = new Client(new RequestParser(), new ResponseParser());
         $response = $client->topHeadlines($this->topHeadlinesRequest);
         $this->assertObjectHasAttribute('status', $response);
     }
 
     public function testClientNoApiKey()
     {
-        $client = new Client();
-        $this->topHeadlinesRequest->q = 'test';
+        $client = new Client(new RequestParser(), new ResponseParser());
+        $this->topHeadlinesRequest->apiKey = null;
         $response = $client->topHeadlines($this->topHeadlinesRequest);
         $this->assertInstanceOf('NewsApi\Response\Error\Error', $response);
     }
 
     public function testClientInvalidApiKey()
     {
-        $client = new Client();
+        $client = new Client(new RequestParser(), new ResponseParser());
         $this->topHeadlinesRequest->apiKey = 'test';
         $this->topHeadlinesRequest->q = 'test';
         $response = $client->topHeadlines($this->topHeadlinesRequest);
@@ -58,8 +62,8 @@ class ClientTest extends TestCase
 
     public function testClientTopHeadlinesNoQuery()
     {
-        $client = new Client();
-        $this->topHeadlinesRequest->apiKey = getenv('NEWS_API_KEY');
+        $client = new Client(new RequestParser(), new ResponseParser());
+        $this->topHeadlinesRequest->q = null;
         $response = $client->topHeadlines($this->topHeadlinesRequest);
         /**
          * @var Error $response
@@ -69,9 +73,7 @@ class ClientTest extends TestCase
 
     public function testClientValidRequest()
     {
-        $client = new Client();
-        $this->topHeadlinesRequest->apiKey = getenv('NEWS_API_KEY');
-        $this->topHeadlinesRequest->q = 'test';
+        $client = new Client(new RequestParser(), new ResponseParser());
         $response = $client->topHeadlines($this->topHeadlinesRequest);
         $this->assertInstanceOf('NewsApi\Response\TopHeadlinesResponse', $response);
     }

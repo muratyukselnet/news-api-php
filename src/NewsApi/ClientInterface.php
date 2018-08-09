@@ -2,8 +2,8 @@
 
 namespace NewsApi;
 
-use NewsApi\Request\TopHeadlinesRequestInterface;
-use NewsApi\Response\TopHeadlinesResponse;
+use NewsApi\Request\TopHeadlinesRequest;
+use NewsApi\Response\ResponseInterface;
 
 /**
  * Interface ClientInterface
@@ -12,8 +12,14 @@ use NewsApi\Response\TopHeadlinesResponse;
 interface ClientInterface
 {
     /**
-     * @param TopHeadlinesRequestInterface $request
-     * @return TopHeadlinesResponse
+     * @param TopHeadlinesRequest $request
+     * @return ResponseInterface
      */
-    public function topHeadlines(TopHeadlinesRequestInterface $request): TopHeadlinesResponse;
+    public function topHeadlines(TopHeadlinesRequest $request): ResponseInterface;
+
+    /**
+     * @param $query
+     * @return string
+     */
+    public function sendRequest($query): string;
 }
