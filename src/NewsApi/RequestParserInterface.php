@@ -10,5 +10,9 @@ use NewsApi\Request\TopHeadlinesRequest;
  */
 interface RequestParserInterface
 {
+    /**
+     * @param TopHeadlinesRequest $request
+     * @return string
+     */
     public function prepareTopHeadlineQueryString(TopHeadlinesRequest $request): string;
 }
