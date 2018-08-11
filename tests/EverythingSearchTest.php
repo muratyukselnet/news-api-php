@@ -54,7 +54,7 @@ class EverythingSearchTest extends TestCase
         $this->assertEquals(ErrorCodes::API_KEY_INVALID, $response->code);
     }
 
-    public function testClientTopHeadlinesNoQuery()
+    public function testClientEverythingNoQuery()
     {
         $client = new Client(new RequestParser(), new ResponseParser());
         $this->everythingRequest->q = null;

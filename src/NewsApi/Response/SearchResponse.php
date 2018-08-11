@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: murat
- * Date: 10.08.2018
- * Time: 01:11
- */
 
 namespace NewsApi\Response;
 
