@@ -54,7 +54,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * Get top headlines
+     * Serch for everything
      * @param EverythingRequest $request
      * @return ResponseInterface
      */
@@ -63,7 +63,7 @@ class Client implements ClientInterface
         return $this->responseParser->parseEverythingResponse(
             $this->sendRequest(
                 $this->requestParser->prepareQueryString($request),
-                self::TOP_HEADLINES_ENDPOINT
+                self::EVERYTHING_ENDPOINT
             )
         );
     }
