@@ -1,4 +1,4 @@
-#PHP Client for Google News API
+# PHP Client for Google News API
 
 PHP wrapper for Google News API. For more information: https://newsapi.org/
 
