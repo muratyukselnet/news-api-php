@@ -16,4 +16,24 @@ class Source
      * @var string
      */
     public $name;
+    /**
+     * @var string
+     */
+    public $description;
+    /**
+     * @var string
+     */
+    public $url;
+    /**
+     * @var string
+     */
+    public $category;
+    /**
+     * @var string
+     */
+    public $language;
+    /**
+     * @var string
+     */
+    public $country;
 }

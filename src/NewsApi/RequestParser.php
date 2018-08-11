@@ -2,7 +2,7 @@
 
 namespace NewsApi;
 
-use NewsApi\Request\SearchRequest;
+use NewsApi\Request\RequestInterface;
 
 /**
  * Class RequestParser
@@ -11,10 +11,10 @@ use NewsApi\Request\SearchRequest;
 class RequestParser implements RequestParserInterface
 {
     /**
-     * @param SearchRequest $request
+     * @param RequestInterface $request
      * @return string
      */
-    public function prepareQueryString(SearchRequest $request): string
+    public function prepareQueryString(RequestInterface $request): string
     {
         return http_build_query($this->filterRequestParams((array) $request));
     }

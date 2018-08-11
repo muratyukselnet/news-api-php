@@ -4,6 +4,7 @@ namespace NewsApi;
 
 use NewsApi\Response\Error\Error;
 use NewsApi\Response\ResponseInterface;
+use NewsApi\Response\SourcesResponse;
 
 /**
  * Class ResponseParser
@@ -31,6 +32,38 @@ class ResponseParser implements ResponseParserInterface
 
     /**
      * @param $response
+     * @return ResponseInterface
+     */
+    public function parseSourcesResponse($response): ResponseInterface
+    {
+        $response = json_decode($response);
+
+        if ($response->status !== 'ok') {
+            return $this->prepareErrorResponse($response);
+        }
+
+        $sourcesResponse = new SourcesResponse();
+        $sourcesResponse->status = $response->status;
+        $sourcesResponse->sources = [];
+
+        foreach ($response->sources as $responseSource) {
+            $source = new Source();
+            $source->id = $responseSource->id ?: '';
+            $source->name = $responseSource->name ?: '';
+            $source->description = $responseSource->description ?: '';
+            $source->url = $responseSource->url ?: '';
+            $source->category = $responseSource->category ?: '';
+            $source->language = $responseSource->language ?: '';
+            $source->country = $responseSource->country ?: '';
+
+            $sourcesResponse->sources[] = $source;
+        }
+
+        return $sourcesResponse;
+    }
+
+    /**
+     * @param $response
      * @param string $responseType
      * @return ResponseInterface
      */
@@ -39,19 +72,14 @@ class ResponseParser implements ResponseParserInterface
         $response = json_decode($response);
 
         if ($response->status !== 'ok') {
-            $error = new Error();
-            $error->status = $response->status;
-            $error->code = $response->code;
-            $error->message = $response->message;
-
-            return $error;
+            return $this->prepareErrorResponse($response);
         }
 
         $responseInstanceName = 'NewsApi\Response\\' . $responseType;
-        $topHeadlinesResponse = new $responseInstanceName();
-        $topHeadlinesResponse->status = $response->status;
-        $topHeadlinesResponse->totalResults = $response->totalResults;
-        $topHeadlinesResponse->articles = [];
+        $searchResponse = new $responseInstanceName();
+        $searchResponse->status = $response->status;
+        $searchResponse->totalResults = $response->totalResults;
+        $searchResponse->articles = [];
 
         foreach ($response->articles as $responseArticle) {
             $article = new Article();
@@ -67,9 +95,23 @@ class ResponseParser implements ResponseParserInterface
             $source->name = $responseArticle->source->name ?: '';
             $article->source = $source;
 
-            $topHeadlinesResponse->articles[] = $article;
+            $searchResponse->articles[] = $article;
         }
 
-        return $topHeadlinesResponse;
+        return $searchResponse;
+    }
+
+    /**
+     * @param $response
+     * @return Error
+     */
+    protected function prepareErrorResponse($response)
+    {
+        $error = new Error();
+        $error->status = $response->status;
+        $error->code = $response->code;
+        $error->message = $response->message;
+
+        return $error;
     }
 }

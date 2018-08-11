@@ -2,12 +2,37 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$request = new \NewsApi\Request\TopHeadlinesRequest();
-$request->apiKey = getenv('NEWS_API_KEY');
-$request->q = 'Turkish';
-$request->category = 'business';
-
 $client = new \NewsApi\Client(new \NewsApi\RequestParser(), new \NewsApi\ResponseParser());
-$response = $client->topHeadlines($request);
+var_dump(topHeadlines($client));
 
-var_dump($response);
+
+function topHeadlines(\NewsApi\Client $client)
+{
+    $request = new \NewsApi\Request\TopHeadlinesRequest();
+    $request->apiKey = getenv('NEWS_API_KEY');
+    $request->q = 'Turkey';
+    $request->category = 'business';
+
+    return $client->topHeadlines($request);
+}
+
+function everything(\NewsApi\Client $client)
+{
+    $request = new \NewsApi\Request\EverythingRequest();
+    $request->apiKey = getenv('NEWS_API_KEY');
+    $request->q = 'Turkey';
+    $request->language = 'en';
+    $request->sortBy = 'relevancy';
+
+    return $client->everything($request);
+}
+
+function sources(\NewsApi\Client $client)
+{
+    $request = new \NewsApi\Request\SourcesRequest();
+    $request->apiKey = getenv('NEWS_API_KEY');
+    $request->language = 'en';
+    $request->category = 'entertainment';
+
+    return $client->sources($request);
+}

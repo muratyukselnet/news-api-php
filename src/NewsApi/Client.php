@@ -3,6 +3,7 @@
 namespace NewsApi;
 
 use NewsApi\Request\EverythingRequest;
+use NewsApi\Request\SourcesRequest;
 use NewsApi\Request\TopHeadlinesRequest;
 use NewsApi\Response\ResponseInterface;
 
@@ -21,7 +22,7 @@ class Client implements ClientInterface
      */
     private $responseParser;
 
-    protected $apiUrl = 'https://newsapi.org/v2/';
+    const API_URL = 'https://newsapi.org/v2/';
 
     const TOP_HEADLINES_ENDPOINT = 'top-headlines';
     const EVERYTHING_ENDPOINT = 'everything';
@@ -69,6 +70,21 @@ class Client implements ClientInterface
     }
 
     /**
+     * Get news sources
+     * @param SourcesRequest $request
+     * @return ResponseInterface
+     */
+    public function sources(SourcesRequest $request): ResponseInterface
+    {
+        return $this->responseParser->parseSourcesResponse(
+            $this->sendRequest(
+                $this->requestParser->prepareQueryString($request),
+                self::SOURCES_ENDPOINT
+            )
+        );
+    }
+
+    /**
      * @param $query
      * @param string $endpoint
      * @return string
@@ -77,7 +93,7 @@ class Client implements ClientInterface
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $endpoint . '?' . $query);
+        curl_setopt($ch, CURLOPT_URL, self::API_URL . $endpoint . '?' . $query);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $output = curl_exec($ch);

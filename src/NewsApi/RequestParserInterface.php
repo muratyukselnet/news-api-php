@@ -2,7 +2,7 @@
 
 namespace NewsApi;
 
-use NewsApi\Request\SearchRequest;
+use NewsApi\Request\RequestInterface;
 
 /**
  * Interface RequestParserInterface
@@ -11,8 +11,8 @@ use NewsApi\Request\SearchRequest;
 interface RequestParserInterface
 {
     /**
-     * @param SearchRequest $request
+     * @param RequestInterface $request
      * @return string
      */
-    public function prepareQueryString(SearchRequest $request): string;
+    public function prepareQueryString(RequestInterface $request): string;
 }
