@@ -14,11 +14,11 @@ use NewsApi\Response\ResponseInterface;
 class Client implements ClientInterface
 {
     /**
-     * @var RequestParserInterface
+     * @var RequestParser
      */
     private $requestParser;
     /**
-     * @var ResponseParserInterface
+     * @var ResponseParser
      */
     private $responseParser;
 
@@ -30,10 +30,10 @@ class Client implements ClientInterface
 
     /**
      * Client constructor.
-     * @param RequestParserInterface $requestParser
-     * @param ResponseParserInterface $responseParser
+     * @param RequestParser $requestParser
+     * @param ResponseParser $responseParser
      */
-    public function __construct(RequestParserInterface $requestParser, ResponseParserInterface $responseParser)
+    public function __construct(RequestParser $requestParser, ResponseParser $responseParser)
     {
         $this->requestParser = $requestParser;
         $this->responseParser = $responseParser;
